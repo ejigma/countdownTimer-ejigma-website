@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>{{ data.title }}</title>
+
+  <link rel='stylesheet'
+    href='https://gitcdn.xyz/repo/AllThingsSmitty/e42d5dbd4f548b2a4ddbf442627a897f/raw/d2038e644ba35c5ec588057465c36435926ff7d9/flexbox-center-container.css'>
+  <link rel='stylesheet'
+    href='https://gitcdn.xyz/repo/AllThingsSmitty/8fb1b38c77ddd4357287f242f07c7797/raw/6cad974c1f0e52b716a3cd1dc8f4407b93f1c375/system-fonts.css'>
+  <link rel="stylesheet" href="{% static 'base.css' %}">
+</head>
+
+<body style="background-color: #{{ data.background_color }}">
+
+  <div class="container">
+    <h1 id="head">{{ data.title }}</h1>
+    <ul>
+      <li><span id="days"></span>روز</li>
+      <li><span id="hours"></span>ساعت</li>
+      <li><span id="minutes"></span>دقیقه</li>
+      <li><span id="seconds"></span>ثانیه</li>
+    </ul>
+    
+  </div>
+{#  <div class="footer">#}
+{#    <p>تمامی حقوق برای تیم اژیگما محفوظ است. ©</p>#}
+{#  </div>#}
+  <script type="text/javascript">
+    const second = 1000,
+      minute = second * 60,
+      hour = minute * 60,
+      day = hour * 24;
+
+    let countDown = new Date("{{ data.opening_date.isoformat }}").getTime(),
+      x = setInterval(function () {
+
+        let now = new Date().getTime(),
+          distance = countDown - now;
+
+        document.getElementById('days').innerText = Math.floor(distance / (day)),
+          document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour)),
+          document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
+          document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
+
+        //do something later when date is reached
+        //if (distance < 0) {
+        //  clearInterval(x);
+        //  'IT'S MY BIRTHDAY!;
+        //}
+
+      }, second)
+  </script>
+</body>
+
+</html>
